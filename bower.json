@@ -1,0 +1,20 @@
+{
+  "name": "glsl",
+  "version": "0.0.0",
+  "authors": [
+    "amagitakayosi <fand@gmork.in>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "glsl.js": "*",
+    "jquery": "~2.1.1"
+  }
+}
