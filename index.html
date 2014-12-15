@@ -1,17 +1,40 @@
 <!doctype html>
 <title>glsl</title>
+<style>
+canvas {
+position: fixed;
+top:0; left:0;
+width: 100%;
+height: 100%;
+}
+</style>
 <body>
 
-  <canvas id="viewport" width="600" height="400"></canvas>
+  <canvas id="viewport" width="800" height="800"></canvas>
   <script id="fragment" type="x-shader/x-fragment">
     #ifdef GL_ES
     precision mediump float;
     #endif
+
     uniform float time;
+    uniform vec2 mouse;
     uniform vec2 resolution;
+
+    int mod (int x, int y) {
+       int r = int(x / y);
+       return x - r * y;
+    }
+
     void main (void) {
-    vec2 p = ( gl_FragCoord.xy / resolution.xy );
-    gl_FragColor = vec4(p.x, p.y, (1.+cos(time/1000.))/2., 1.0);
+      int t = mod(int(time) / (1000 / 30), 256);
+      vec2 p = ( gl_FragCoord.xy / resolution.xy );
+      int r = int(pow(float(t), 2.0) * sin(p.x * p.x * float(mod(t * 131, 303))));
+      int g = int(pow(float(t * 808), 7.0) * cos((-p.x * 1002.0) * (time * 102.3) / float(mod(t * 131, 303))));
+      int b = int(pow(float(t), 3.0) * sin((p.y * time * 11.) * float(mod(t * 131, mod(303, 19)))));
+      float fr = float(mod(r * r, 256)) / 200.0;
+      float fg = float(mod(g * b, 256)) / 200.0;
+      float fb = float(mod(b * b, 256)) / 200.0;
+      gl_FragColor = vec4(pow(cos(-fr * 93.1 - fb) + 0.5, 2.), cos(fg * 53.1) + 0.5, pow(cos(fb * 3.1) + 0.5, 2.), 1.0);
     }
   </script>
 
